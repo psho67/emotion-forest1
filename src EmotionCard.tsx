@@ -1,78 +1,124 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 type EmotionCardProps = {
   name: string;
+  mood: string;
+  message: string;
+  date: string;
 };
 
-const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
+export default function EmotionCard({ name, mood, message, date }: EmotionCardProps) {
+  const [reply, setReply] = useState('');
+  const [submittedReply, setSubmittedReply] = useState('');
 
-export default function EmotionCard({ name }: EmotionCardProps) {
-  const [selectedMood, setSelectedMood] = useState('');
-  const [message, setMessage] = useState('');
-  const [watered, setWatered] = useState(false);
+  const handleShare = async () => {
+    const shareText = `${name}의 감정카드\n${mood}\n“${message}”\n${date}`;
 
-  const handleWater = (mood: string) => {
-    if (watered) return;
-    setSelectedMood(mood);
-    setWatered(true);
-    alert(`${name}에게 '${mood}' 감정과 함께 따뜻한 말을 전했어요!`);
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${name}의 감정카드`,
+          text: shareText,
+        });
+      } catch (error) {
+        alert('공유가 취소되었어요.');
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareText);
+        alert('공유 텍스트가 복사되었어요! 붙여넣기로 전해보세요.');
+      } catch (err) {
+        alert('클립보드 복사에 실패했어요 😢');
+      }
+    }
+  };
+
+  const handleReplySubmit = () => {
+    if (reply.trim() === '') return;
+    setSubmittedReply(reply);
+    setReply('');
   };
 
   return (
     <div
       style={{
-        background: 'rgba(255,255,255,0.85)',
-        padding: '16px',
-        borderRadius: '12px',
-        marginBottom: '16px',
+        width: '100%',
+        maxWidth: '400px',
+        margin: '0 auto',
+        backgroundColor: '#fffef7',
+        borderRadius: '16px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        padding: '20px',
+        fontFamily: 'sans-serif',
+        textAlign: 'center',
+        color: '#333',
       }}
     >
-      <strong>{name} 🌱</strong>
-      <div style={{ margin: '8px 0', fontSize: '14px' }}>
-        오늘 기분은 어떤가요?
-      </div>
+      <h2 style={{ fontSize: '20px', marginBottom: '8px' }}>{name}의 감정카드</h2>
+      <div style={{ fontSize: '32px', marginBottom: '12px' }}>{mood}</div>
+      <p style={{ fontSize: '16px', fontStyle: 'italic', marginBottom: '16px' }}>
+        "{message}"
+      </p>
+      <div style={{ fontSize: '12px', color: '#888', marginBottom: '16px' }}>{date}</div>
 
-      {!watered && (
-        <>
+      <button
+        onClick={handleShare}
+        style={{
+          padding: '10px 16px',
+          borderRadius: '8px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '14px',
+          marginBottom: '16px',
+        }}
+      >
+        공유하기 💌
+      </button>
+
+      {submittedReply ? (
+        <div
+          style={{
+            backgroundColor: '#f0f9f2',
+            padding: '12px',
+            borderRadius: '8px',
+            fontSize: '14px',
+            color: '#2e7d32',
+          }}
+        >
+          답장: "{submittedReply}"
+        </div>
+      ) : (
+        <div style={{ marginTop: '12px' }}>
           <input
-            placeholder="따뜻한 한마디를 적어주세요"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            type="text"
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+            placeholder="답장을 입력해 주세요"
             style={{
-              padding: '8px',
-              width: '100%',
-              borderRadius: '8px',
+              padding: '6px',
+              borderRadius: '6px',
               border: '1px solid #ccc',
-              marginBottom: '12px',
+              width: '100%',
+              fontSize: '13px',
+              marginBottom: '8px',
             }}
           />
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {moods.map((mood) => (
-              <button
-                key={mood}
-                onClick={() => handleWater(mood)}
-                style={{
-                  padding: '6px 10px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: '#4CAF50',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                }}
-              >
-                {mood}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-
-      {watered && (
-        <div style={{ marginTop: '12px', fontSize: '14px', color: '#333' }}>
-          🌿 오늘 감정: <strong>{selectedMood}</strong>
-          <br />
-          💌 메시지: <em>"{message}"</em>
+          <button
+            onClick={handleReplySubmit}
+            style={{
+              padding: '6px 12px',
+              borderRadius: '6px',
+              backgroundColor: '#2196F3',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '13px',
+            }}
+          >
+            답장 보내기
+          </button>
         </div>
       )}
     </div>

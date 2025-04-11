@@ -1,4 +1,4 @@
-import { useState } from
+import React, { useState } from 'react';
 
 type EmotionCardProps = {
   name: string;

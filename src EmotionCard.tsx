@@ -8,6 +8,28 @@ type EmotionCardProps = {
 };
 
 export default function EmotionCard({ name, mood, message, date }: EmotionCardProps) {
+  const handleShare = async () => {
+    const shareText = `${name}의 감정카드\n${mood}\n“${message}”\n${date}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${name}의 감정카드`,
+          text: shareText,
+        });
+      } catch (error) {
+        alert('공유가 취소되었어요.');
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareText);
+        alert('공유 텍스트가 복사되었어요! 붙여넣기로 전해보세요.');
+      } catch (err) {
+        alert('클립보드 복사에 실패했어요 😢');
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -28,7 +50,22 @@ export default function EmotionCard({ name, mood, message, date }: EmotionCardPr
       <p style={{ fontSize: '16px', fontStyle: 'italic', marginBottom: '16px' }}>
         "{message}"
       </p>
-      <div style={{ fontSize: '12px', color: '#888' }}>{date}</div>
+      <div style={{ fontSize: '12px', color: '#888', marginBottom: '16px' }}>{date}</div>
+
+      <button
+        onClick={handleShare}
+        style={{
+          padding: '10px 16px',
+          borderRadius: '8px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '14px',
+        }}
+      >
+        공유하기 💌
+      </button>
     </div>
   );
 }

@@ -1,22 +1,25 @@
 import { useState } from 'react';
 
 const friends = [
-  { name: '잎사귀1', wateredToday: false },
-  { name: '감정이', wateredToday: false },
-  { name: '푸름이', wateredToday: false },
+  { name: '잎사귀1', wateredToday: false, mood: '' },
+  { name: '감정이', wateredToday: false, mood: '' },
+  { name: '푸름이', wateredToday: false, mood: '' },
 ];
+
+const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
 
 export default function App() {
   const [friendList, setFriendList] = useState(friends);
 
-  const waterFriend = (index: number) => {
+  const waterFriend = (index: number, mood: string) => {
     if (friendList[index].wateredToday) return;
 
     const newList = [...friendList];
     newList[index].wateredToday = true;
+    newList[index].mood = mood;
     setFriendList(newList);
 
-    alert(`${newList[index].name}의 감정 나무에 따뜻한 물을 주었어요!`);
+    alert(`${newList[index].name}의 감정 나무에 따뜻한 물을 주고, '${mood}'라고 말했어요!`);
   };
 
   return (
@@ -58,48 +61,49 @@ export default function App() {
       </p>
 
       <div>
-        {friendList.map(
-          (
-            friend: { name: string; wateredToday: boolean },
-            index: number
-          ) => (
-            <div
-              key={index}
-              style={{
-                background: 'rgba(255,255,255,0.8)',
-                padding: '12px 16px',
-                borderRadius: '12px',
-                marginBottom: '12px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <div>
-                <strong>{friend.name}</strong>
-                <div style={{ fontSize: '13px', color: '#555' }}>
-                  {friend.wateredToday
-                    ? '오늘 이미 물을 주었어요'
-                    : '아직 물을 줄 수 있어요'}
-                </div>
+        {friendList.map((friend, index) => (
+          <div
+            key={index}
+            style={{
+              background: 'rgba(255,255,255,0.8)',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              marginBottom: '12px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+            }}
+          >
+            <div>
+              <strong>{friend.name}</strong>
+              <div style={{ fontSize: '13px', color: '#555' }}>
+                {friend.wateredToday
+                  ? `오늘 감정: ${friend.mood}`
+                  : '오늘 기분은 어떤가요?'}
               </div>
-              <button
-                onClick={() => waterFriend(index)}
-                disabled={friend.wateredToday}
-                style={{
-                  backgroundColor: friend.wateredToday ? '#ccc' : '#4CAF50',
-                  color: 'white',
-                  border: 'none',
-                  padding: '8px 12px',
-                  borderRadius: '8px',
-                  cursor: friend.wateredToday ? 'not-allowed' : 'pointer',
-                }}
-              >
-                물 주기
-              </button>
             </div>
-          )
-        )}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {moods.map((moodOption) => (
+                <button
+                  key={moodOption}
+                  disabled={friend.wateredToday}
+                  onClick={() => waterFriend(index, moodOption)}
+                  style={{
+                    backgroundColor: friend.wateredToday ? '#ccc' : '#4CAF50',
+                    color: 'white',
+                    border: 'none',
+                    padding: '6px 10px',
+                    borderRadius: '8px',
+                    cursor: friend.wateredToday ? 'not-allowed' : 'pointer',
+                    fontSize: '13px',
+                  }}
+                >
+                  {moodOption}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

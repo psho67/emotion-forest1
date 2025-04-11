@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 type EmotionCardProps = {
   name: string;
@@ -8,6 +8,9 @@ type EmotionCardProps = {
 };
 
 export default function EmotionCard({ name, mood, message, date }: EmotionCardProps) {
+  const [reply, setReply] = useState('');
+  const [submittedReply, setSubmittedReply] = useState('');
+
   const handleShare = async () => {
     const shareText = `${name}의 감정카드\n${mood}\n“${message}”\n${date}`;
 
@@ -28,6 +31,12 @@ export default function EmotionCard({ name, mood, message, date }: EmotionCardPr
         alert('클립보드 복사에 실패했어요 😢');
       }
     }
+  };
+
+  const handleReplySubmit = () => {
+    if (reply.trim() === '') return;
+    setSubmittedReply(reply);
+    setReply('');
   };
 
   return (
@@ -62,10 +71,56 @@ export default function EmotionCard({ name, mood, message, date }: EmotionCardPr
           border: 'none',
           cursor: 'pointer',
           fontSize: '14px',
+          marginBottom: '16px',
         }}
       >
         공유하기 💌
       </button>
+
+      {submittedReply ? (
+        <div
+          style={{
+            backgroundColor: '#f0f9f2',
+            padding: '12px',
+            borderRadius: '8px',
+            fontSize: '14px',
+            color: '#2e7d32',
+          }}
+        >
+          답장: "{submittedReply}"
+        </div>
+      ) : (
+        <div style={{ marginTop: '12px' }}>
+          <input
+            type="text"
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+            placeholder="답장을 입력해 주세요"
+            style={{
+              padding: '6px',
+              borderRadius: '6px',
+              border: '1px solid #ccc',
+              width: '100%',
+              fontSize: '13px',
+              marginBottom: '8px',
+            }}
+          />
+          <button
+            onClick={handleReplySubmit}
+            style={{
+              padding: '6px 12px',
+              borderRadius: '6px',
+              backgroundColor: '#2196F3',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '13px',
+            }}
+          >
+            답장 보내기
+          </button>
+        </div>
+      )}
     </div>
   );
 }

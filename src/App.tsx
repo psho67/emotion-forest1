@@ -1,4 +1,4 @@
-  { useState }
+import React, { useState } from 'react';
 
 const friends = [
   { name: '잎사귀1', wateredToday: false },
@@ -29,43 +29,48 @@ export default function App() {
       </p>
 
       <div>
-        {friendList.map((friend, index) => (
-          <div
-            key={index}
-            style={{
-              background: '#e0fbe0',
-              padding: '12px 16px',
-              borderRadius: '12px',
-              marginBottom: '12px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <div>
-              <strong>{friend.name}</strong>
-              <div style={{ fontSize: '13px', color: '#555' }}>
-                {friend.wateredToday
-                  ? '오늘 이미 물을 주었어요'
-                  : '아직 물을 줄 수 있어요'}
-              </div>
-            </div>
-            <button
-              onClick={() => waterFriend(index)}
-              disabled={friend.wateredToday}
+        {friendList.map(
+          (
+            friend: { name: string; wateredToday: boolean },
+            index: number
+          ) => (
+            <div
+              key={index}
               style={{
-                backgroundColor: friend.wateredToday ? '#ccc' : '#4CAF50',
-                color: 'white',
-                border: 'none',
-                padding: '8px 12px',
-                borderRadius: '8px',
-                cursor: friend.wateredToday ? 'not-allowed' : 'pointer',
+                background: '#e0fbe0',
+                padding: '12px 16px',
+                borderRadius: '12px',
+                marginBottom: '12px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}
             >
-              물 주기
-            </button>
-          </div>
-        ))}
+              <div>
+                <strong>{friend.name}</strong>
+                <div style={{ fontSize: '13px', color: '#555' }}>
+                  {friend.wateredToday
+                    ? '오늘 이미 물을 주었어요'
+                    : '아직 물을 줄 수 있어요'}
+                </div>
+              </div>
+              <button
+                onClick={() => waterFriend(index)}
+                disabled={friend.wateredToday}
+                style={{
+                  backgroundColor: friend.wateredToday ? '#ccc' : '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  cursor: friend.wateredToday ? 'not-allowed' : 'pointer',
+                }}
+              >
+                물 주기
+              </button>
+            </div>
+          )
+        )}
       </div>
     </div>
   );

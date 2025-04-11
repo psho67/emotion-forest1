@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+{ useState }
 
 const friends = [
   { name: '잎사귀1', wateredToday: false },

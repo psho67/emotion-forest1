@@ -4,15 +4,26 @@ const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워�
 
 const getToday = () => new Date().toLocaleDateString();
 
-const friends = [
+type HistoryEntry = { date: string; mood: string; message: string };
+
+type Friend = {
+  name: string;
+  wateredToday: boolean;
+  mood: string;
+  message: string;
+  level: number;
+  history: HistoryEntry[];
+};
+
+const initialFriends: Friend[] = [
   { name: '잎사귀1', wateredToday: false, mood: '', message: '', level: 1, history: [] },
   { name: '감정이', wateredToday: false, mood: '', message: '', level: 1, history: [] },
   { name: '푸름이', wateredToday: false, mood: '', message: '', level: 1, history: [] },
 ];
 
 export default function App() {
-  const [friendList, setFriendList] = useState(friends);
-  const [messages, setMessages] = useState<string[]>(Array(friends.length).fill(''));
+  const [friendList, setFriendList] = useState<Friend[]>(initialFriends);
+  const [messages, setMessages] = useState<string[]>(Array(initialFriends.length).fill(''));
 
   const waterFriend = (index: number, mood: string) => {
     if (friendList[index].wateredToday) return;

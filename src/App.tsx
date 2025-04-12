@@ -1,7 +1,7 @@
 import { useState } from 'react';
-
+import EmotionCard from './components/EmotionCard';
 const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
-
+const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
 const getToday = () => new Date().toLocaleDateString();
 
 type HistoryEntry = { date: string; mood: string; message: string };
@@ -171,3 +171,9 @@ export default function App() {
     </div>
   );
 }
+<EmotionCard
+  name="잎사귀1"
+  mood="😊 행복해요"
+  message="오늘도 좋은 하루 보내~"
+  date="2025-04-13"
+/>

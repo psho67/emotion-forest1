@@ -23,7 +23,6 @@ export default function ChatBubble({ text, isUser }: ChatBubbleProps) {
           border: '1px solid #ccc',
           color: '#333',
           fontSize: '14px',
-          wordBreak: 'break-word',
         }}
       >
         {text}

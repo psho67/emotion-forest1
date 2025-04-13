@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-
 import EmotionCard from './components/EmotionCard';
-
 const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
-
 const getToday = () => new Date().toLocaleDateString();
 
 type HistoryEntry = { date: string; mood: string; message: string };

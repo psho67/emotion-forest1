@@ -4,7 +4,6 @@ const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워�
 const getToday = () => new Date().toLocaleDateString();
 
 type HistoryEntry = { date: string; mood: string; message: string };
-
 type Friend = {
   name: string;
   wateredToday: boolean;

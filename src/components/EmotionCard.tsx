@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
-type HistoryEntry = { date: string; mood: string; message: string };
+const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
 
+const getToday = () => new Date().toLocaleDateString();
+
+type HistoryEntry = { date: string; mood: string; message: string };
 type Friend = {
   name: string;
   wateredToday: boolean;

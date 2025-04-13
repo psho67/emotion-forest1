@@ -5,7 +5,6 @@ const getToday = () => new Date().toLocaleDateString();
 
 type HistoryEntry = { date: string; mood: string; message: string };
 
-
 type Friend = {
   name: string;
   wateredToday: boolean;

@@ -1,9 +1,9 @@
 import React from 'react';
 
-interface ChatBubbleProps {
+type ChatBubbleProps = {
   text: string;
   isUser: boolean;
-}
+};
 
 export default function ChatBubble({ text, isUser }: ChatBubbleProps) {
   return (
@@ -11,17 +11,16 @@ export default function ChatBubble({ text, isUser }: ChatBubbleProps) {
       style={{
         display: 'flex',
         justifyContent: isUser ? 'flex-end' : 'flex-start',
-        margin: '8px 0',
+        marginBottom: '8px',
       }}
     >
       <div
         style={{
-          maxWidth: '60%',
-          padding: '10px 14px',
-          borderRadius: '20px',
-          backgroundColor: isUser ? '#DCF8C6' : '#fff',
+          backgroundColor: isUser ? '#dcf8c6' : '#ffffff',
           border: '1px solid #ccc',
-          color: '#333',
+          borderRadius: '10px',
+          padding: '10px',
+          maxWidth: '70%',
           fontSize: '14px',
         }}
       >

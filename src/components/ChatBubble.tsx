@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-
 type ChatBubbleProps = {
   text: string;
   isUser: boolean;

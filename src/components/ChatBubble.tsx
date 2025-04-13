@@ -2,17 +2,15 @@ import React from 'react';
 
 interface ChatBubbleProps {
   text: string;
-  from: 'me' | 'you';
+  isUser: boolean;
 }
 
-export default function ChatBubble({ text, from }: ChatBubbleProps) {
-  const isMe = from === 'me';
-
+export default function ChatBubble({ text, isUser }: ChatBubbleProps) {
   return (
     <div
       style={{
         display: 'flex',
-        justifyContent: isMe ? 'flex-end' : 'flex-start',
+        justifyContent: isUser ? 'flex-end' : 'flex-start',
         margin: '8px 0',
       }}
     >
@@ -21,7 +19,7 @@ export default function ChatBubble({ text, from }: ChatBubbleProps) {
           maxWidth: '60%',
           padding: '10px 14px',
           borderRadius: '20px',
-          backgroundColor: isMe ? '#DCF8C6' : '#FFF',
+          backgroundColor: isUser ? '#DCF8C6' : '#fff',
           border: '1px solid #ccc',
           color: '#333',
           fontSize: '14px',

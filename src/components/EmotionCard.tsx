@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import EmotionCard from './components/EmotionCard';
+import ChatBubble from './components/ChatBubble';
 
 const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
+
 const getToday = () => new Date().toLocaleDateString();
 
-type HistoryEntry = {
-  date: string;
-  mood: string;
-  message: string;
-};
+type HistoryEntry = { date: string; mood: string; message: string };
 
 type Friend = {
   name: string;
@@ -38,12 +37,17 @@ export default function App() {
 
     currentFriend.wateredToday = true;
     currentFriend.mood = mood;
-    currentFriend.message = messages[index];
     currentFriend.level = newLevel;
     currentFriend.history.push({ date: today, mood, message: messages[index] });
 
     setFriendList(newList);
-    alert(`${currentFriend.name}의 감정 나무에 따뜻한 물을 주고, '${mood}'라고 말했어요!`);
+    alert(`${currentFriend.name}의 감정 나무에 물을 주고 '${mood}'라고 말했어요!`);
+  };
+
+  const handleMessageChange = (index: number, value: string) => {
+    const newMessages = [...messages];
+    newMessages[index] = value;
+    setMessages(newMessages);
   };
 
   return (
@@ -61,72 +65,34 @@ export default function App() {
         color: '#333',
       }}
     >
-      <h1
-        style={{
-          fontSize: '24px',
-          marginBottom: '16px',
-          backgroundColor: 'rgba(255,255,255,0.6)',
-          padding: '8px',
-          borderRadius: '8px',
-        }}
-      >
+      <h1 style={{ fontSize: '24px', marginBottom: '16px', backgroundColor: 'rgba(255,255,255,0.6)', padding: '8px', borderRadius: '8px' }}>
         감정 숲 - 친구의 나무에 물 주기
       </h1>
-      <p
-        style={{
-          color: '#444',
-          marginBottom: '24px',
-          backgroundColor: 'rgba(255,255,255,0.5)',
-          padding: '8px',
-          borderRadius: '8px',
-        }}
-      >
+      <p style={{ color: '#444', marginBottom: '24px', backgroundColor: 'rgba(255,255,255,0.5)', padding: '8px', borderRadius: '8px' }}>
         마음을 담아 친구의 감정 나무에 물을 주세요. 하루 한 번만 가능해요.
       </p>
 
-      <div>
-        {friendList.map((friend, index) => (
-          <div
-            key={index}
-            style={{
-              background: 'rgba(255,255,255,0.8)',
-              padding: '12px 16px',
-              borderRadius: '12px',
-              marginBottom: '12px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-            }}
-          >
-            <div>
-              <strong>{friend.name} 🌱</strong>
-              <div style={{ fontSize: '13px', color: '#555' }}>
-                {friend.wateredToday
-                  ? `오늘 감정: ${friend.mood}`
-                  : '오늘 기분은 어떤가요?'}
-              </div>
+      {friendList.map((friend, index) => (
+        <div key={index} style={{ background: 'rgba(255,255,255,0.8)', padding: '12px 16px', borderRadius: '12px', marginBottom: '12px' }}>
+          <div>
+            <strong>{friend.name} 🌱</strong>
+            <div style={{ fontSize: '13px', color: '#555' }}>
+              오늘 기분은 어떤가요?
             </div>
-
-            {!friend.wateredToday && (
-              <input
-                type="text"
-                placeholder="따뜻한 한마디를 적어주세요"
-                value={messages[index]}
-                onChange={(e) => {
-                  const newMessages = [...messages];
-                  newMessages[index] = e.target.value;
-                  setMessages(newMessages);
-                }}
-                style={{
-                  padding: '6px',
-                  borderRadius: '6px',
-                  border: '1px solid #ccc',
-                  width: '100%',
-                  fontSize: '13px',
-                }}
-              />
-            )}
-
+            <input
+              type="text"
+              value={messages[index]}
+              onChange={(e) => handleMessageChange(index, e.target.value)}
+              placeholder="따뜻한 한마디를 적어주세요"
+              style={{
+                padding: '6px',
+                borderRadius: '6px',
+                border: '1px solid #ccc',
+                width: '100%',
+                fontSize: '13px',
+                marginBottom: '8px',
+              }}
+            />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {moods.map((moodOption) => (
                 <button
@@ -147,19 +113,32 @@ export default function App() {
                 </button>
               ))}
             </div>
-
-            {friend.wateredToday && (
-              <ul style={{ fontSize: '12px', color: '#444', paddingTop: '4px' }}>
-                {friend.history.map((entry, idx) => (
-                  <li key={idx}>
-                    {entry.date}: {entry.mood} - {entry.message}
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
-        ))}
-      </div>
+
+          {friend.wateredToday && (
+            <>
+              <ChatBubble text={`${friend.name}의 감정카드`} isUser={false} />
+              <ChatBubble text={`💬 ${friend.message}`} isUser={true} />
+              <EmotionCard
+                name={friend.name}
+                mood={friend.mood}
+                message={friend.message}
+                date={getToday()}
+              />
+            </>
+          )}
+
+          {friend.history.length > 0 && (
+            <ul style={{ paddingLeft: '16px' }}>
+              {friend.history.map((entry, i) => (
+                <li key={i}>
+                  {entry.date}: {entry.mood} - "{entry.message}"
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

@@ -165,7 +165,7 @@ export default function App() {
                 </ul>
               </div>
             <ChatBubble text="안녕! 물 줄게!" isUser={false} />
-            <ChatBubble text="고마워~ 오늘도 힘내!" isUser={true} />
+           <ChatBubble text="고마워~ 오늘도 힘내!" isUser={true} />
            <ChatBubble text="힘내서 자라볼게!" isUser={false} />
             )}
           </div>

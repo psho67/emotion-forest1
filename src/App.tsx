@@ -8,7 +8,7 @@ type EmotionCardProps = {
   date: string;
 };
 
-export default function EmotionCard({
+export function EmotionCard({
   name,
   mood,
   message,
@@ -29,7 +29,6 @@ export default function EmotionCard({
         setError('공유 실패: ' + err.message);
       }
     } else {
-      // 클립보드 복사 기능 추가
       try {
         await navigator.clipboard.writeText(shareText);
         setSuccessMessage('공유할 텍스트가 클립보드에 복사되었습니다.');
@@ -127,6 +126,19 @@ export default function EmotionCard({
       >
         공유하기
       </button>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div>
+      <EmotionCard
+        name="테스트 사용자"
+        mood="😊 행복해요"
+        message="오늘은 기분이 정말 좋아요!"
+        date="2025-04-14"
+      />
     </div>
   );
 }

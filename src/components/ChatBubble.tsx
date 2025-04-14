@@ -1,5 +1,5 @@
-// 불필요한 React import 제거
-import React from 'react'; // 제거 가능
+// React import 추가 (React 17 미만 또는 설정 문제 방지용)
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const ChatBubble = ({ message }: { message: string }) => (

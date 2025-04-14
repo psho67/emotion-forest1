@@ -1,5 +1,7 @@
+
 'use client';
 import React from 'react';
+import './ChatBubble.css'; // 스타일 파일 추가
 
 type ChatBubbleProps = {
   text: string;
@@ -8,23 +10,8 @@ type ChatBubbleProps = {
 
 export default function ChatBubble({ text, isUser }: ChatBubbleProps) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: isUser ? 'flex-end' : 'flex-start',
-        marginBottom: '8px',
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: isUser ? '#dcf8c6' : '#ffffff',
-          border: '1px solid #ccc',
-          borderRadius: '10px',
-          padding: '10px',
-          maxWidth: '70%',
-          fontSize: '14px',
-        }}
-      >
+    <div className={`chat-bubble-container ${isUser ? 'user' : 'bot'}`}>
+      <div className="chat-bubble">
         {text}
       </div>
     </div>

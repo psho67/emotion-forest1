@@ -1,17 +1,27 @@
-<div
-       style={{
-         display: 'flex',
-         justifyContent: isUser ? 'flex-end' : 'flex-start',
-         marginBottom: '8px',
-       }}
-     >
-       <div
-         style={{
-           backgroundColor: isUser ? '#dcf8c6' : '#ffffff',
-           border: '1px solid #ccc',
-           borderRadius: '10px',
-           padding: '10px',
-           maxWidth: '70%',
-           fontSize: '14px',
-         }}
-       >
+.chat-bubble-container {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.chat-bubble-container.user {
+  justify-content: flex-end;
+}
+
+.chat-bubble-container.other {
+  justify-content: flex-start;
+}
+
+.chat-bubble {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 70%;
+  font-size: 14px;
+  word-break: break-word; /* 긴 단어 처리 */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.chat-bubble.user {
+  background-color: #dcf8c6;
+}

@@ -1,18 +1,15 @@
-'use client';
-import React from 'react';
-import './ChatBubble.css'; // CSS 스타일 파일 연결
+// 불필요한 React import 제거
+import React from 'react'; // 제거 가능
+import PropTypes from 'prop-types';
 
-type ChatBubbleProps = {
-  text: string;
-  isUser: boolean;
+const ChatBubble = ({ message }: { message: string }) => (
+  <div style={{ padding: '10px', background: '#f0f0f0', borderRadius: '5px' }}>
+    {message}
+  </div>
+);
+
+ChatBubble.propTypes = {
+  message: PropTypes.string.isRequired,
 };
 
-export default function ChatBubble({ text, isUser }: ChatBubbleProps) {
-  return (
-    <div className={`chat-bubble-container ${isUser ? 'user' : 'other'}`}>
-      <div className={`chat-bubble ${isUser ? 'user' : 'other'}`}>
-        {text}
-      </div>
-    </div>
-  );
-}
+export default ChatBubble;

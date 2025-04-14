@@ -1,50 +1,132 @@
+'use client';
 import { useState } from 'react';
-import EmotionCard from './components/EmotionCard';
-import ChatBubble from './components/ChatBubble';
 
-const moods = ['😊 행복해요', '😥 조금 지쳤어요', '🙏 고마워요'];
-const getToday = () => new Date().toLocaleDateString();
-
-type HistoryEntry = { date: string; mood: string; message: string };
-type Friend = {
+type EmotionCardProps = {
   name: string;
-  wateredToday: boolean;
   mood: string;
   message: string;
-  level: number;
-  history: HistoryEntry[];
+  date: string;
 };
 
-const initialFriends: Friend[] = [
-  { name: '잎사귀1', wateredToday: false, mood: '', message: '', level: 1, history: [] },
-  { name: '감정이', wateredToday: false, mood: '', message: '', level: 1, history: [] },
-  { name: '푸름이', wateredToday: false, mood: '', message: '', level: 1, history: [] },
-];
+export default function EmotionCard({
+  name,
+  mood,
+  message,
+  date,
+}: EmotionCardProps) {
+  const [reply, setReply] = useState('');
+  const [submittedReply, setSubmittedReply] = useState('');
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-const styles = {
-  container: {
-    padding: '20px',
-    maxWidth: '480px',
-    margin: '0 auto',
-    minHeight: '100vh',
-    backgroundImage:
-      'url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80")',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    color: '#333',
-  },
-  header: {
-    fontSize: '24px',
-    marginBottom: '16px',
-    backgroundColor: 'rgba(255,255,255,0.6)',
-    padding: '8px',
-    borderRadius: '8px',
-  },
- description: {
-  color: '#444',
-  marginBottom: '24px',
-  backgroundColor: 'rgba(255,255,255,0.5)',
-  padding: '8px',
-  borderRadius: '8px',
-},
+  const handleShare = async () => {
+    const shareText = `${name}의 감정카드\n\n${mood}\n\n${message}\n\n${date}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: '감정카드', text: shareText });
+        setSuccessMessage('공유가 성공적으로 완료되었습니다!');
+      } catch (err) {
+        setError('공유 실패: ' + err.message);
+      }
+    } else {
+      // 클립보드 복사 기능 추가
+      try {
+        await navigator.clipboard.writeText(shareText);
+        setSuccessMessage('공유할 텍스트가 클립보드에 복사되었습니다.');
+      } catch (err) {
+        setError('클립보드 복사 실패: ' + err.message);
+      }
+    }
+  };
+
+  const handleReplySubmit = () => {
+    if (reply.trim().length === 0) {
+      setError('답장이 비어 있습니다. 내용을 입력해주세요.');
+      return;
+    }
+    if (reply.length > 100) {
+      setError('답장은 최대 100자까지 입력 가능합니다.');
+      return;
+    }
+    setError('');
+    setSubmittedReply(reply);
+    setReply('');
+    setSuccessMessage('답장이 성공적으로 전송되었습니다!');
+  };
+
+  const styles = {
+    cardContainer: {
+      marginTop: '20px',
+      padding: '16px',
+      borderRadius: '12px',
+      background: 'rgba(255,255,255,0.9)',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    },
+    title: { marginBottom: '4px' },
+    text: { marginBottom: '8px' },
+    date: { fontSize: '12px', color: '#666' },
+    input: {
+      marginTop: '12px',
+      padding: '6px',
+      borderRadius: '6px',
+      border: '1px solid #ccc',
+      width: '100%',
+      fontSize: '13px',
+      marginBottom: '8px',
+    },
+    button: {
+      padding: '6px 12px',
+      borderRadius: '6px',
+      color: 'white',
+      border: 'none',
+      cursor: 'pointer',
+      fontSize: '13px',
+    },
+    primaryButton: { backgroundColor: '#2196f3' },
+    secondaryButton: { backgroundColor: '#4CAF50', marginTop: '12px' },
+    errorText: { color: 'red', fontSize: '13px', marginTop: '8px' },
+    successText: { color: 'green', fontSize: '13px', marginTop: '8px' },
+    replyText: { marginTop: '10px', fontSize: '14px' },
+  };
+
+  return (
+    <div style={styles.cardContainer}>
+      <h3 style={styles.title}>{name}의 감정카드</h3>
+      <p style={styles.text}>{mood}</p>
+      <p style={styles.text}>{message}</p>
+      <p style={styles.date}>{date}</p>
+
+      <input
+        type="text"
+        placeholder="따뜻한 답장을 적어주세요 (최대 100자)"
+        value={reply}
+        onChange={(e) => setReply(e.target.value)}
+        style={styles.input}
+        aria-label="답장 입력"
+      />
+
+      <button
+        onClick={handleReplySubmit}
+        style={{ ...styles.button, ...styles.primaryButton }}
+      >
+        답장 보내기
+      </button>
+
+      {error && <div style={styles.errorText}>{error}</div>}
+      {successMessage && <div style={styles.successText}>{successMessage}</div>}
+
+      {submittedReply && (
+        <div style={styles.replyText}>
+          <strong>내 답장:</strong> {submittedReply}
+        </div>
+      )}
+
+      <button
+        onClick={handleShare}
+        style={{ ...styles.button, ...styles.secondaryButton }}
+      >
+        공유하기
+      </button>
+    </div>
+  );
+}

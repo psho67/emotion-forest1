@@ -26,14 +26,16 @@ export function EmotionCard({
         await navigator.share({ title: '감정카드', text: shareText });
         setSuccessMessage('공유가 성공적으로 완료되었습니다!');
       } catch (err) {
-        setError('공유 실패: ' + err.message);
+        // err 타입 단언
+        setError('공유 실패: ' + (err as Error).message);
       }
     } else {
       try {
         await navigator.clipboard.writeText(shareText);
         setSuccessMessage('공유할 텍스트가 클립보드에 복사되었습니다.');
       } catch (err) {
-        setError('클립보드 복사 실패: ' + err.message);
+        // err 타입 단언
+        setError('클립보드 복사 실패: ' + (err as Error).message);
       }
     }
   };

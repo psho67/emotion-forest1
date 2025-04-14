@@ -41,6 +41,10 @@ const styles = {
     padding: '8px',
     borderRadius: '8px',
   },
-  description: {
-    color: '#444',
-    margin
+ description: {
+  color: '#444',
+  marginBottom: '24px',
+  backgroundColor: 'rgba(255,255,255,0.5)',
+  padding: '8px',
+  borderRadius: '8px',
+},

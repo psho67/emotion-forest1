@@ -20,20 +20,24 @@ export default function EmotionCard({
 
   const handleShare = async () => {
     if (!navigator.share) {
-      console.log('Web Share API가 지원되지 않는 브라우저입니다.');
+      alert('Web Share API가 지원되지 않는 브라우저입니다.');
       return;
     }
     const shareText = `${name}의 감정카드\n\n${mood}\n\n${message}\n\n${date}`;
     try {
       await navigator.share({ title: '감정카드', text: shareText });
     } catch (err) {
-      console.log('공유 실패:', err);
+      console.error('공유 실패:', err);
     }
   };
 
   const handleReplySubmit = () => {
     if (reply.trim() === '') {
       setError('답장이 비어 있습니다. 내용을 입력해주세요.');
+      return;
+    }
+    if (reply.length > 200) {
+      setError('답장이 너무 깁니다. 200자 이내로 입력해주세요.');
       return;
     }
     setError('');

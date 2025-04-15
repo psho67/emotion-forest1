@@ -1,4 +1,5 @@
-// React import 추가 (React 17 미만 또는 설정 문제 방지용)
+// React의 버전에 따라 import 여부를 결정
+// 필요하지 않을 경우 아래 import를 제거하세요.
 import React from 'react';
 import PropTypes from 'prop-types';
 

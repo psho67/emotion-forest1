@@ -20,14 +20,19 @@ export default function EmotionCard({
 
   const handleShare = async () => {
     if (!navigator.share) {
-      alert('Web Share API가 지원되지 않는 브라우저입니다.');
+      alert('Web Share API가 지원되지 않는 브라우저입니다. 다른 방법으로 공유해 주세요.');
       return;
     }
     const shareText = `${name}의 감정카드\n\n${mood}\n\n${message}\n\n${date}`;
     try {
       await navigator.share({ title: '감정카드', text: shareText });
-    } catch (err) {
-      console.error('공유 실패:', err);
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        console.log('사용자가 공유를 취소했습니다.');
+      } else {
+        console.error('공유 중 오류가 발생했습니다:', err);
+        alert('공유에 실패했습니다. 다시 시도해 주세요.');
+      }
     }
   };
 

@@ -104,23 +104,4 @@ export default function EmotionCard({
         onClick={handleReplySubmit}
         style={{ ...styles.button, ...styles.primaryButton }}
       >
-        답장 보내기
-      </button>
-
-      {error && <div style={styles.errorText}>{error}</div>}
-
-      {submittedReply && (
-        <div style={styles.replyText}>
-          <strong>내 답장:</strong> {submittedReply}
-        </div>
-      )}
-
-      <button
-        onClick={handleShare}
-        style={{ ...styles.button, ...styles.secondaryButton }}
-      >
-        공유하기
-      </button>
-    </div>
-  );
-}
+       

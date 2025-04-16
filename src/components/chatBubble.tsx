@@ -1,7 +1,7 @@
 import React from 'react';
 import './chatBubble.css';
 
-interface chatBubbleProps {
+interface ChatBubbleProps {
   message: string;
   isUser?: boolean;
 }

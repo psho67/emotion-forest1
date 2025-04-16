@@ -1,3 +1,11 @@
+import React from 'react';
+import './chatBubble.css';
+
+interface ChatBubbleProps {
+  message: string;
+  isUser?: boolean;
+}
+
 function ChatBubble({ message, isUser = false }: ChatBubbleProps) {
   return (
     <div className={`chat-bubble-container ${isUser ? 'user' : 'other'}`}>
@@ -7,3 +15,5 @@ function ChatBubble({ message, isUser = false }: ChatBubbleProps) {
     </div>
   );
 }
+
+export default ChatBubble;

@@ -26,23 +26,17 @@ export function EmotionCard({
         await navigator.share({ title: '감정카드', text: shareText });
         setSuccessMessage('공유가 성공적으로 완료되었습니다!');
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError('공유 실패: ' + err.message);
-        } else {
-          setError('공유 실패: 알 수 없는 오류');
-        }
+        setError(err instanceof Error ? `공유 실패: ${err.message}` : '공유 실패: 알 수 없는 오류');
       }
-    } else {
+    } else if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(shareText);
         setSuccessMessage('공유할 텍스트가 클립보드에 복사되었습니다.');
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError('클립보드 복사 실패: ' + err.message);
-        } else {
-          setError('클립보드 복사 실패: 알 수 없는 오류');
-        }
+        setError(err instanceof Error ? `클립보드 복사 실패: ${err.message}` : '클립보드 복사 실패: 알 수 없는 오류');
       }
+    } else {
+      setError('공유 기능 및 클립보드 복사가 지원되지 않는 브라우저입니다.');
     }
   };
 

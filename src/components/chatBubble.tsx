@@ -3,10 +3,13 @@ import './chatBubble.css';
 
 interface ChatBubbleProps {
   message: string;
-  isUser: boolean;
+  isUser?: boolean; // ✅ 선택적, undefined 가능
 }
 
-const ChatBubble: React.FC<ChatBubbleProps> = ({ message, isUser }) => {
+const ChatBubble: React.FC<ChatBubbleProps> = ({
+  message,
+  isUser = false, // ✅ 기본값
+}) => {
   return (
     <div className={`chat-bubble-container ${isUser ? 'user' : 'other'}`}>
       <div className={`chat-bubble ${isUser ? 'chat-bubble_user' : ''}`}>

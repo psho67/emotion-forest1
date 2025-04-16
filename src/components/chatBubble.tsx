@@ -16,4 +16,4 @@ function ChatBubble({ message, isUser = false }: ChatBubbleProps) {
   );
 }
 
-export default ChatBubble;
+export default chatBubble;

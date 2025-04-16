@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 
 function App() {
-  const [name, setName] = useState('잎싹이'); // 사용자 이름 또는 기본값
-  const [mood, setMood] = useState('기분 좋아요!');
-  const [message, setMessage] = useState('오늘은 기분이 맑고 따뜻해요.');
+  const [name, setName] = useState('');
+  const [mood, setMood] = useState('');
+  const [message, setMessage] = useState('');
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [successMessage, setSuccessMessage] = useState('');
   const [error, setError] = useState('');
-
+  
   const handleShare = async () => {
     const shareText = `${name}의 감정카드\n\n${mood}\n\n${message}\n${date}`;
 
-    // 브라우저 환경인지 먼저 체크
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
         await navigator.share({ title: '감정카드', text: shareText });
@@ -39,9 +38,7 @@ function App() {
 
   return (
     <div>
-      <button onClick={handleShare}>공유하기</button>
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {/* UI 요소들 */}
     </div>
   );
 }

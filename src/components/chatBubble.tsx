@@ -6,7 +6,7 @@ interface chatBubbleProps {
   isUser?: boolean;
 }
 
-function chatBubble({ message, isUser = false }: chatBubbleProps) {
+function ChatBubble({ message, isUser = false }: ChatBubbleProps) {
   return (
     <div className={`chat-bubble-container ${isUser ? 'user' : 'other'}`}>
       <div className={`chat-bubble${isUser ? ' chat-bubble_user' : ''}`}>

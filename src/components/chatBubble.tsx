@@ -9,7 +9,7 @@ interface ChatBubbleProps {
 const ChatBubble: React.FC<ChatBubbleProps> = ({ message, isUser }) => {
   return (
     <div className={`chat-bubble-container ${isUser ? 'user' : 'other'}`}>
-      <div className={`chat-bubble ${isUser ? 'chat-bubble_user' : ''}`}>
+      <div className={`chat-bubble${isUser ? ' chat-bubble_user' : ''}`}>
         {message}
       </div>
     </div>

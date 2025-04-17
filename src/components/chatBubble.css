@@ -1,6 +1,6 @@
 .chat-bubble-container {
   display: flex;
-  margin-bottom: 8px;
+  margin: 10px 0;
 }
 
 .chat-bubble-container.user {
@@ -12,16 +12,18 @@
 }
 
 .chat-bubble {
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
   max-width: 70%;
+  padding: 12px 16px;
+  border-radius: 20px;
+  background-color: #f0f0f0;
+  color: #333;
   font-size: 14px;
-  word-break: break-word; /* 긴 단어 처리 */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  line-height: 1.4;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  word-break: break-word;
 }
 
-.chat-bubble.user {
-  background-color: #dcf8c6;
+.chat-bubble_user {
+  background-color: #cdeff7; /* 사용자 말풍선 파란빛 */
+  color: #000;
 }

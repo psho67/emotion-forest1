@@ -24,6 +24,10 @@
 }
 
 .chat-bubble_user {
+  .chat-bubble_user {
   background-color: #cdeff7;
+  color: #000;
+}
+
   color: #000;
 }

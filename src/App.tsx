@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ChatBubble from './components/chatBubble';
 
 function App() {
   const [name, setName] = useState('');

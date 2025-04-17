@@ -11,3 +11,12 @@
   },
   "include": ["src"]
 }
+// tsconfig.json
+{
+  "compilerOptions": {
+    ...
+    "allowImportingTsExtensions": false, // ❌ 끄기
+    "jsx": "react-jsx",
+    ...
+  }
+}

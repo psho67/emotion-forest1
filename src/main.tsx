@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx'; // ✅ 꼭 .tsx 확장자까지 명시
+// main.tsx
+import App from './App'; // 👈 확장자 없이
+
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
